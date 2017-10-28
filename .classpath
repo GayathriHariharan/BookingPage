@@ -205,10 +205,13 @@
 	<classpathentry kind="lib" path="C:/Users/Cheevanthi/Desktop/json/lib/xmlworker-5.4.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Cheevanthi/Desktop/json/lib/xpp3-1.1.4c.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Cheevanthi/eclipse/Downloads/org.apache.commons.logging-1.1.1.jar/org.apache.commons.logging-1.1.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_80">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Cheevanthi/eclipse/Downloads/json-lib.jar/json-lib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Cheevanthi/eclipse/Downloads/ezmorph-1.0.6-sources.jar/ezmorph-1.0.6-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Cheevanthi/eclipse/Downloads/json_jar.zip"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

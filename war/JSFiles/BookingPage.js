@@ -1,33 +1,28 @@
 
-
-$(document).ready(function(){
+$(document).ready(function(){	
 	
 	//Generic ajax call function 
-	
-	var ajaxFun = function(url,dataValue,dataType)	{	
-		
-	return $.ajax({
-			
-			url         :  url,
-			data        :  dataValue,
-			dataType    :  dataType,
-			contentType :  'application/json',
-			success     :  function(data){
-							console.log("returned data" + data)
-							return data;
-			},
-			failure     : function(data){
-				           return data;
-			}
-		 
-			
-		});	
+	var ajaxFun = function(url,dataValue,dataType)	{			
+		  return $.ajax({
+				
+				url         :  url,
+				data        :  dataValue,
+				dataType    :  dataType,
+				contentType :  'application/json',
+				success     :  function(data){
+								console.log("returned data" + data)
+								return data;
+				},
+				failure     :  function(data){
+					           return data;
+				}
+			 
+				
+			});	
 	}
 	
-	//Making ajax call to server with company key
-	
-	let companyKey = "2fe6f17d-d161-4de7-8ed5-46c53b3540d9";
-	
+	//Making ajax call to server with company key	
+	let companyKey = "2fe6f17d-d161-4de7-8ed5-46c53b3540d9";	
 	var serviceValue =  ajaxFun('/bookingPage',companyKey,'json');
 	
 	

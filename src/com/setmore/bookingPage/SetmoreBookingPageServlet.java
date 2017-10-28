@@ -29,7 +29,10 @@ public class SetmoreBookingPageServlet  {
 		System.out.println("company key " + companyKey);
 		
 		URLFetchClass classObj = new URLFetchClass();
-		String services = classObj.getService();
+		String accessToken = classObj.getAccessToken();
+		String services    = classObj.getService(accessToken);
+		
+		
 		return services;	
 	
 	}

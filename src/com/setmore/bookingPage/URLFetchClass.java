@@ -1,52 +1,99 @@
 package com.setmore.bookingPage;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.codehaus.jackson.map.JsonSerializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
+
+import net.sf.json.JSONSerializer;
+
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 
 public class URLFetchClass {
 
-           public static void main(String[] args) throws Exception{
-		
-			URLFetchClass ClassObj = new URLFetchClass();
-			ClassObj.getService();
-	    } 
-//PubString getAccessToken(){
-//		
-//		
-//           String AuthURL =  "https://setmore.fullauth.com/0/oauth2/v1/auth?response_type=code"
-//           		+ "&client_id=5e32a-c3d49a5861445b78680798f3c7a8eec9&client_secret=fKZJ-rmo3mCvZERgkfojN_WS9jGiBG&"
-//           		+ "refresh_token=e22260dfea6sx4nPUH_13rO6gDkShZkSJureAgo_vP5Uv";			
-//		 return "";
-//	}
+     
 	
+           Map<String,String> hashmap = new HashMap<String,String>();           
+           ObjectMapper objectmapper      = new ObjectMapper();
+           
 	
-	
-	
-	String accessToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzZXRtb3JlLmZ1bGxhdXRoLmNvbSIsImlhdCI6MTUwOTEwNDgwOCwidXNlcl9pZCI6IjJmZTZmMTdkLWQxNjEtNGRlNy04ZWQ1LTQ2YzUzYjM1NDBkOSIsImV4cCI6MTUwOTExMjAwOCwianRpIjoiZGQ4ZWQuOE1PaDVCWmp1NCJ9.JXgTk8CdjjIBkHCep4VEteOp8hTqtwTBh3PB085cMCg";
-	
-	//ObjectMapper objMap = new ObjectMapper();
-	//HashMap<String,String> hashmap = new HashMap<>();
-	
-	
-	public String getService() throws Exception {
+           public String getAccessToken() throws IOException, JSONException{
+        	
+        	   URL obj = new URL("https://developer.setmore.com/api/v1/o/oauth2/token?refreshToken=7af7d05d50SB3I6gYN6AosocWO_N3Tquz1s0w4_vNvnw8");
+        	   HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        	   con.setRequestMethod("GET");
+        	   con.setRequestProperty("Content-Type", "application/json");
+        	 
+        	 
+        	   BufferedReader in = new BufferedReader(
+        	   new InputStreamReader(con.getInputStream()));
+        	   String inputLine;
+        	   String response = "";
+
+        	   while ((inputLine = in.readLine()) != null) {
+        	   response +=inputLine;
+        	   }
+        	   in.close();
+        	 
+        	    TypeReference<HashMap<String,Object>> typeRef 
+        	            = new TypeReference<HashMap<String,Object>>() {};
+
+        	    HashMap<String,Object> hashmap = objectmapper.readValue(response, typeRef); 
+        	 
+        	    String accessToken = "";
+        	   
+        	    for(Map.Entry<String, Object> entry : hashmap.entrySet()){
+        	    	String key = entry.getKey();
+        	    	if(key.equals("data")){
+        	    	     	    		
+        	    		Map<String,Object> token = (Map<String, Object>) entry.getValue();
+        	    	    		
+        	    		   for(Map.Entry<String, Object> entryVal : token.entrySet()){
+        	    			
+        	    			   if( entryVal.getKey().equals("token")){
+        	    			
+        	    				      Map<String,Object> accessTokenValue = (Map<String, Object>) entryVal.getValue();
+        	    				          for(Map.Entry<String, Object> accessTokenEntry : accessTokenValue.entrySet()){
+	        	    					      if(accessTokenEntry.getKey().equals("access_token"))
+	        	    						   accessToken = (String) accessTokenEntry.getValue();    	    						
+        	    				}
+        	    			}
+        	    			
+        	    		}
+        	    		
+        	    	}        	    	
+        	    }
+        	   System.out.println("accessToken " + accessToken);
+        	   return accessToken;      	  
+        	   
+           }
+
+	public String getService(String Token) throws Exception {
 		
 		String url = "https://developer.setmore.com/api/v1/bookingapi/services";
 		String response="";
 		
-		try{	
+		System.out.println("the value of token inseide the get service " + Token);
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 		
 		con.setRequestMethod("GET");		
         con.setRequestProperty("Content-Type", "application/json");	 
-        con.setRequestProperty("Authorization", accessToken);
+        con.setRequestProperty("Authorization", Token);
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
 		String inputLine;
@@ -57,18 +104,9 @@ public class URLFetchClass {
 		System.out.println("response is " + response);
 			
 		}
-		//hashmap = objMap.readValue("data", new TypeReference<HashMap<String, String>>(){});
-		
-		
-		}catch(Exception e){
-			System.out.println("Exception " + e);
-		}
+			
 		return response;
 
 	}
-	
-	
-	
-	
 	
 }

@@ -5,7 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Setmore Booking page</title>
+ 
  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	 
 	  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	  <link rel = "stylesheet" type="text/css" href = "designPage.css" /> 
